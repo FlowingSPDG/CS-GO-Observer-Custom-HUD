@@ -199,13 +199,12 @@ function resetBomb() {
 var menu = false;
 var freezetime = false;
 let last_round = 0;
-
-function updatePage(data) {
+function updateHUD(data) {
     var observed = data.getObserved();
     var phase = data.phase();
     var team_one = data.getTeamOne();
     var team_two = data.getTeamTwo();
-    
+
     var matchup = data.getMatchType();
     var match = data.getMatch();
     if(matchup && matchup.toLowerCase() != "none"){
@@ -218,7 +217,7 @@ function updatePage(data) {
         }
         $("#match_one_info").html(left_bl);
         $("#match_two_info").html(right_bl);
-        
+
         $("#match_tournament").show();
         $("#match_info").text("Best Of " + matchup.substr(2));
     } else {
@@ -263,7 +262,7 @@ function updatePage(data) {
             .toLowerCase() != "ct"
             ? team_ct
             : team_t;
-        
+
         teams.left.side = left.side || null;
         teams.right.side = right.side || null;
 
@@ -368,13 +367,13 @@ function updatePage(data) {
 
     //EVERY OTHER PLAYER
     if (players) {
-        
+
         var offset = 0;
         for (var sl in players) {
             let player = players[sl];
-            if (avatars[player.steamid] != true && disp_avatars) 
+            if (avatars[player.steamid] != true && disp_avatars)
                 loadAvatar(player.steamid);
-            
+
             if(player.observer_slot <= 5 && offset == 0 && player.team.toLowerCase() != teams.left.side)
                 offset = 6 - sl;
         }
@@ -423,18 +422,18 @@ function updatePage(data) {
                     $(".money").fadeTo(1000, 0);
                     $(".stat_t").fadeTo(1000, 0);
                     $("#stats-container").fadeTo(1000,0);
-                    if (observed && observed.steamid != 1) 
+                    if (observed && observed.steamid != 1)
                         $("#player-container").fadeTo(1000, 1);
 
-                    }
                 }
+            }
 
         } else {
             if ($(".money").css("opacity") == 1) {
                 $(".money").fadeTo(1000, 0);
                 $(".stat_t").fadeTo(1000, 0);
                 $("#stats-container").fadeTo(1000,0);
-                if (observed && observed.steamid != 1) 
+                if (observed && observed.steamid != 1)
                     $("#player-container").fadeTo(1000, 1);
             }
         }
@@ -454,4 +453,9 @@ function updatePage(data) {
     }
     freezetime = round.phase == "freezetime";
     last_round = round_now;
+}
+
+
+function updatePage(data) {
+    updateHUD(data);
 }
