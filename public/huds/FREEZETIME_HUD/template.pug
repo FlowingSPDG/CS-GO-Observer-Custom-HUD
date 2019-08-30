@@ -1,0 +1,30 @@
+doctype
+html(lang="ja")
+  head
+    script(src="/socket.io/socket.io.js")
+    script(src="http://code.jquery.com/jquery-2.1.4.min.js")
+    script.
+      var ip = "#{ip}",
+      port = "#{port}",
+      disp_avatars = #{avatars},
+      delay = #{delay};
+    link(rel="stylesheet", href=css)
+  body
+    #freezetime_hud
+      section#round_history_panel
+        h2
+          span#ordinal_number 1ST
+          | HALF
+        ul#round_history
+          - for (let i = 1; i <= 15; i++)
+            li
+              .inner
+                .left
+                .round #{i}
+                .right
+      #team_info_panel
+        #score_bar
+         #team1
+
+    script(src="/js/main.js")
+    script(src=hud)

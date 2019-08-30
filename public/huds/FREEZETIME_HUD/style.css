@@ -1,0 +1,76 @@
+@import url("https://use.typekit.net/oqr1kgb.css");
+#freezetime_hud {
+    font-family: acumin-pro, sans-serif;
+    font-style: normal;
+}
+#round_history_panel {
+    width: 192px;
+    position: absolute;
+    top: 35px;
+    right: 85px;
+    background: rgba(0, 0, 0, .6);
+}
+
+#round_history_panel h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
+    color: #fff;
+    background: linear-gradient(to right, #fca503 0%,#f27b09 50%,#e95110 100%);
+}
+#round_history_panel h2 #ordinal_number {
+    padding: 0 10px 0 0;
+}
+#round_history_panel #round_history {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#round_history_panel #round_history li::after {
+    content: "";
+    border-bottom: solid 1px #918f8f;
+    width: calc(100% - 40px);
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+#round_history_panel #round_history li:nth-child(3n) {
+    border-bottom: solid 2px #d26b00;
+}
+#round_history_panel #round_history li:nth-child(3n)::after {
+    display: none;
+}
+#round_history_panel #round_history li:last-child {
+    border: none;
+}
+#round_history_panel #round_history li:last-child::after {
+    display: none;
+}
+#round_history_panel #round_history li .inner {
+    display: flex;
+    height: 52px; // TODO: サイズ調整
+    box-sizing: border-box;
+}
+#round_history_panel #round_history li .inner img {
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+#round_history_panel #round_history li .inner .left {
+    width: 49px;
+    padding: 2px;
+}
+#round_history_panel #round_history li .inner .right {
+    width: 49px;
+    padding: 2px;
+}
+#round_history_panel #round_history li .inner .round {
+    font-size: 35px;
+    color: #fff;
+    background: rgba(0, 0, 0, .4);
+    width: 87px;
+    text-align: center;
+}
