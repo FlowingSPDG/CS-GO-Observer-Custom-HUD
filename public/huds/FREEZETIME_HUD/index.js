@@ -55,18 +55,13 @@ const updateRoundWinPanel = (function () {
                 return;
             }
 
-            const isFirstHalf = data.map().round <= 15;
+            const shouldShowFirstHalfPanel = data.map().round < 15; // 15ラウンド終了時は 2nd HALF 表示に切り替える.
 
-            // 15ラウンド終了直後および16ラウンド目は 1ST HALF の表示のまま更新しない.
-            if (previousRound === 15 && data.map().round === 15) {
-                return;
-            }
-
-            updateRoundLabel(isFirstHalf);
+            updateRoundLabel(shouldShowFirstHalfPanel);
 
             $roundHistory.each(function (index, element) {
                 const $element = $(element);
-                const round = isFirstHalf ? index + 1 : index + 16; // セカウンドハーフでは 16 からスタート
+                const round = shouldShowFirstHalfPanel ? index + 1 : index + 16; // セカウンドハーフでは 16 からスタート
 
                 // ラウンド数のラベル更新.
                 $element.find(".round").text(round);
