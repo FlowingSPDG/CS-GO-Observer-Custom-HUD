@@ -1,13 +1,20 @@
 @import url("https://use.typekit.net/oqr1kgb.css");
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
 #freezetime_hud {
     font-family: acumin-pro, sans-serif;
     font-style: normal;
 }
-#round_history_panel { /* TODO: height 調整 */
+#round_history_panel {
     width: 192px;
+    height: 837px;
     position: absolute;
-    top: 35px;
-    right: 85px;
+    top: 0;
+    right: 0;
+    overflow: hidden;
     background: rgba(0, 0, 0, .6);
 }
 
@@ -51,21 +58,23 @@
 }
 #round_history_panel #round_history li .inner {
     display: flex;
-    height: 52px; // TODO: サイズ調整
+    height: 51px;
     box-sizing: border-box;
 }
 #round_history_panel #round_history li .inner img {
-    width: 100%;
+    width: 96%;
     height: auto;
     vertical-align: middle;
 }
 #round_history_panel #round_history li .inner .left {
     width: 49px;
     padding: 2px;
+    text-align: center;
 }
 #round_history_panel #round_history li .inner .right {
     width: 49px;
     padding: 2px;
+    text-align: center;
 }
 #round_history_panel #round_history li .inner .round {
     font-size: 35px;
