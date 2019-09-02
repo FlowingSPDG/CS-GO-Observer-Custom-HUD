@@ -174,29 +174,29 @@ const updateTeamInfoPanel = (function () {
         const baseImagePath = "/files/img";
         const weaponImages = [];
         if (primaryWeaponName) {
-            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${primaryWeaponName}.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${primaryWeaponName}.png`, "primary"));
         }
         if (secondaryWeaponName) {
-            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${secondaryWeaponName}.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${secondaryWeaponName}.png`, "secondary"));
         }
 
         [...Array(highExplosiveAmount)].forEach(() => {
-            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_hegrenade.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_hegrenade.png`, "grenade"));
         });
         [...Array(flashBangAmount)].forEach(() => {
-            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_flashbang.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_flashbang.png`, "grenade"));
         });
         [...Array(smokeAmount)].forEach(() => {
-            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_smokegrenade.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_smokegrenade.png`, "grenade"));
         });
         [...Array(molotovAmount)].forEach(() => {
-            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_molotov.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_molotov.png`, "grenade"));
         });
         [...Array(incGrenadeAmount)].forEach(() => {
-            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_incgrenade.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_incgrenade.png`, "grenade"));
         });
         [...Array(decoyAmount)].forEach(() => {
-            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_decoy.png`));
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_decoy.png`, "grenade"));
         });
         return weaponImages;
     };
