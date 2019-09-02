@@ -24,7 +24,56 @@ html(lang="ja")
                 .right
       #team_info_panel
         #score_bar
-         #team1
-
+          .team1.team(data-team="CT")
+            .name TEAM
+            .score 5
+          .vs VS
+          .team2.team(data-team="T")
+            .name TEAM
+            .score 0
+        #team_money_panel
+          ul.team1.team
+            - for (let i = 1; i <= 5; i++)
+              li(data-team="CT")
+                .name NAMENAMENAMENAMENAMENAMENAME
+                .weapons
+                  img(src="/files/img/weapons/ak47.png")
+                  img(src="/files/img/weapons/glock.png")
+                  img(src="/files/img/grenades/weapon_flashbang.png")
+                  img(src="/files/img/grenades/weapon_flashbang.png")
+                  img(src="/files/img/grenades/weapon_molotov.png")
+                  img(src="/files/img/grenades/weapon_hegrenade.png")
+                  img.armor(src="/files/img/helmet.png")
+                .money $4550
+          .center_panel
+            .team1.team
+              .equipment_value
+                img(src="/huds/FREEZETIME_HUD/img/equipment.png")
+                span $16000
+              .team_money
+                img(src="/huds/FREEZETIME_HUD/img/team.png")
+                span $16000
+            .logo
+              img(src="/huds/FREEZETIME_HUD/img/logo.png")
+            .team2.team
+              .equipment_value
+                img(src="/huds/FREEZETIME_HUD/img/equipment.png")
+                span $16000
+              .team_money
+                img(src="/huds/FREEZETIME_HUD/img/team.png")
+                span $16000
+          ul.team2.team
+            - for (let i = 1; i <= 5; i++)
+              li(data-team="T")
+                .name NAMENAMENAMENAMENAMENAMENAME
+                .weapons
+                  img(src="/files/img/weapons/ak47.png")
+                  img(src="/files/img/weapons/glock.png")
+                  img(src="/files/img/grenades/weapon_flashbang.png")
+                  img(src="/files/img/grenades/weapon_flashbang.png")
+                  img(src="/files/img/grenades/weapon_molotov.png")
+                  img(src="/files/img/grenades/weapon_hegrenade.png")
+                  img.armor(src="/files/img/helmet.png")
+                .money $4550
     script(src="/js/main.js")
     script(src=hud)

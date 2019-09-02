@@ -2,15 +2,18 @@ const SlotSide = {
     left: "left",
     right: "right",
 };
-const reverseSlotSide = function (slotSide) {
-  return slotSide === SlotSide.left
-      ? SlotSide.right
-      : SlotSide.left
-};
+
 const getSlotSide = function (observerSlot) {
     return observerSlot !== 0 && observerSlot <= 5
         ? SlotSide.left
         : SlotSide.right;
+};
+
+const createImageElement = function (src, className) {
+    const $img = $("<img />");
+    $img.attr("src", src);
+    $img.addClass(className);
+    return $img
 };
 
 const updateRoundWinPanel = (function () {
@@ -103,6 +106,150 @@ const updateRoundWinPanel = (function () {
     };
 })();
 
+const updateTeamInfoPanel = (function () {
+    const $teamInfoPanel = $("#team_info_panel");
+    const $scoreBar = $teamInfoPanel.find("#score_bar");
+    const $team1ScoreBar = $scoreBar.find(".team1");
+    const $team2ScoreBar = $scoreBar.find(".team2");
+
+    const $teamMoneyPanel = $("#team_money_panel");
+    const $team1MoneyPanel = $teamMoneyPanel.children(".team1").children("li");
+    const $team2MoneyPanel = $teamMoneyPanel.children(".team2").children("li");
+
+    const updateTeamScore = function (data, $scoreBarElement, team, slotSide) {
+        const player = data.getPlayer(slotSide === SlotSide.left ? 1 : 6);
+        const teamName = team ? team.team_name : `TEAM${slotSide === slotSide.left ? 1 : 2}`;
+        if (!player) {
+            $scoreBarElement.children(".name").text(teamName);
+            $scoreBarElement.children(".score").text("0");
+            return;
+        }
+        const teamScore = player.team === "CT" ? data.getCT().score : data.getT().score;
+
+        $scoreBarElement.attr("data-team", player.team); // T/CT
+        $scoreBarElement.children(".name").text(teamName);
+        $scoreBarElement.children(".score").text(teamScore);
+    };
+
+    const isPrimary = (weaponType) => [
+        "Rifle",
+        "SniperRifle",
+        "Shotgun",
+        "Machine Gun",
+        "Submachine Gun",
+    ].indexOf(weaponType) !== -1;
+    const isSecondary = (weaponType) => weaponType === "Pistol";
+    const isGrenade = (weaponType) => weaponType === "Grenade";
+
+    const parseWeapons = function (weapons) {
+        let primaryWeaponName = null;
+        let secondaryWeaponName = null;
+        let highExplosiveAmount = 0;
+        let flashBangAmount = 0;
+        let smokeAmount = 0;
+        let molotovAmount = 0;
+        let incGrenadeAmount = 0;
+        let decoyAmount = 0;
+        for (let slot of Object.keys(weapons)) {
+            const weapon = weapons[slot];
+            if (isPrimary(weapon.type)) {
+                primaryWeaponName = weapon.name.replace("weapon_", "");
+            } else if (isSecondary(weapon.type)) {
+                secondaryWeaponName = weapon.name.replace("weapon_", "");
+            } else if (isGrenade(weapon.type)) {
+                if (weapon.name === "weapon_hegrenade") {
+                    highExplosiveAmount = weapon.ammo_reserve;
+                } else if (weapon.name === "weapon_molotov") {
+                    molotovAmount = weapon.ammo_reserve;
+                } else if (weapon.name === "weapon_flashbang") {
+                    flashBangAmount = weapon.ammo_reserve;
+                } else if (weapon.name === "weapon_decoy") {
+                    decoyAmount = weapon.ammo_reserve;
+                } else if (weapon.name === "weapon_smokegrenade") {
+                    smokeAmount = weapon.ammo_reserve;
+                } else if (weapon.name === "weapon_incgrenade") {
+                    incGrenadeAmount = weapon.ammo_reserve;
+                }
+            }
+        }
+        const baseImagePath = "/files/img";
+        const weaponImages = [];
+        if (primaryWeaponName) {
+            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${primaryWeaponName}.png`));
+        }
+        if (secondaryWeaponName) {
+            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${secondaryWeaponName}.png`));
+        }
+
+        [...Array(highExplosiveAmount)].forEach(() => {
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_hegrenade.png`));
+        });
+        [...Array(flashBangAmount)].forEach(() => {
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_flashbang.png`));
+        });
+        [...Array(smokeAmount)].forEach(() => {
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_smokegrenade.png`));
+        });
+        [...Array(molotovAmount)].forEach(() => {
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_molotov.png`));
+        });
+        [...Array(incGrenadeAmount)].forEach(() => {
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_incgrenade.png`));
+        });
+        [...Array(decoyAmount)].forEach(() => {
+            weaponImages.push(createImageElement(`${baseImagePath}/grenades/weapon_decoy.png`));
+        });
+        return weaponImages;
+    };
+    const parseArmor = function (stats) {
+        const baseImagePath = "/files/img";
+        if (stats.helmet) {
+            return createImageElement(`${baseImagePath}/helmet.png`, "armor");
+        }
+        if (stats.armor > 0) {
+            return createImageElement(`${baseImagePath}/armor.png`, "armor");
+        }
+        return null;
+    };
+    const updateTeamMoneyPanel = function (team) {
+        if (team.players && team.players.length > 0) {
+            const slotSide = getSlotSide(team.players[0].observer_slot);
+            const $panel = slotSide === SlotSide.left ? $team1MoneyPanel : $team2MoneyPanel;
+            $panel.each(function (index, target) {
+                const $target = $(target);
+                const player = team.players[index];
+                if (player) {
+                    $panel.attr("data-team", player.team);
+                    $target.children(".name").text(player.name);
+                    $target.children(".money").text(`$${player.state.money}`);
+
+                    const weapons = parseWeapons(player.getWeapons());
+                    const armor = parseArmor(player.getStats());
+                    let html = "";
+                    weapons.forEach($element => html += $element[0].outerHTML);
+                    if (armor) {
+                        html += armor[0].outerHTML;
+                    }
+                    if ($target.children(".weapons")[0].innerHTML !== html) {
+                        $target.children(".weapons").html(html);
+                    }
+                } else {
+                    $target.children(".name").text("");
+                    $target.children(".money").text("");
+                    $target.children(".weapons").html("");
+                }
+            });
+        }
+    };
+    return function (data) {
+        updateTeamScore(data, $team1ScoreBar, data.getTeamOne(), SlotSide.left);
+        updateTeamScore(data, $team2ScoreBar, data.getTeamTwo(), SlotSide.right);
+        updateTeamMoneyPanel(data.getCT());
+        updateTeamMoneyPanel(data.getT());
+    };
+})();
+
 function updatePage(data) {
     updateRoundWinPanel(data);
+    updateTeamInfoPanel(data);
 }
