@@ -116,6 +116,10 @@ const updateTeamInfoPanel = (function () {
     const $team1MoneyPanel = $teamMoneyPanel.children(".team1").children("li");
     const $team2MoneyPanel = $teamMoneyPanel.children(".team2").children("li");
 
+    const $centerPanel = $(".center_panel");
+    const $team1CenterPanel = $centerPanel.children(".team1");
+    const $team2CenterPanel = $centerPanel.children(".team2");
+
     const updateTeamScore = function (data, $scoreBarElement, team, slotSide) {
         const player = data.getPlayer(slotSide === SlotSide.left ? 1 : 6);
         const teamName = team ? team.team_name : `TEAM${slotSide === slotSide.left ? 1 : 2}`;
@@ -214,6 +218,9 @@ const updateTeamInfoPanel = (function () {
     const updateTeamMoneyPanel = function (team) {
         if (team.players && team.players.length > 0) {
             const slotSide = getSlotSide(team.players[0].observer_slot);
+            const $teamCenterPanel = slotSide === SlotSide.left ? $team1CenterPanel : $team2CenterPanel;
+            $teamCenterPanel.children(".equipment_value").children("span").text(`$${team.equip_value}`);
+            $teamCenterPanel.children(".team_money").children("span").text(`$${team.team_money}`);
             const $panel = slotSide === SlotSide.left ? $team1MoneyPanel : $team2MoneyPanel;
             $panel.each(function (index, target) {
                 const $target = $(target);
