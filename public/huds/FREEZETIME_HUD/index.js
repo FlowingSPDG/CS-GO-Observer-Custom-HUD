@@ -55,7 +55,7 @@ const updateRoundWinPanel = (function () {
                 return;
             }
 
-            const shouldShowFirstHalfPanel = data.map().round < 15; // 15ラウンド終了時は 2nd HALF 表示に切り替える.
+            const shouldShowFirstHalfPanel = data.map().round <= 15; // 16ラウンド目終了時までは 1st half 表示
 
             updateRoundLabel(shouldShowFirstHalfPanel);
 
