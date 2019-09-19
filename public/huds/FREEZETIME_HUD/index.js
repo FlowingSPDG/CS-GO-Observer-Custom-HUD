@@ -34,9 +34,7 @@ const updateRoundWinPanel = (function () {
             "ct_win_defuse": `${basePath}/defused.png`,
             "ct_win_time": `${basePath}/time.png`,
         };
-        const $img = $("<img />");
-        $img.attr("src", roundWinIconMap[reason]);
-        return $img;
+        return createImageElement(roundWinIconMap[reason], reason);
     };
 
     let previousRoundWins = {};
