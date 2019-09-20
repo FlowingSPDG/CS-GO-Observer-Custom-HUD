@@ -66,12 +66,6 @@ body {
     height: auto;
     vertical-align: middle;
 }
-#round_history_panel #round_history li .inner img.t_win_bomb {
-    filter: invert(100%);
-}
-#round_history_panel #round_history li .inner img.ct_win_time {
-    filter: invert(100%);
-}
 #round_history_panel #round_history li .inner .left {
     width: 49px;
     padding: 2px;

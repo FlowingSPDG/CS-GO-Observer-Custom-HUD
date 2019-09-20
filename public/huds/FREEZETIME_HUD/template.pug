@@ -16,6 +16,36 @@ html(lang="ja")
           span#ordinal_number 1ST
           | HALF
         ul#round_history
+          //li
+            .inner
+              .left
+                img.ct_win_elimination(src="/huds/FREEZETIME_HUD/img/round/ct/kill.png")
+              .round 1
+              .right
+          //li
+            .inner
+              .left
+              .round 1
+              .right
+                img.t_win_elimination(src="/huds/FREEZETIME_HUD/img/round/t/kill.png")
+          //li
+            .inner
+              .left
+              .round 1
+              .right
+                img.t_win_bomb(src="/huds/FREEZETIME_HUD/img/round/exploded.png")
+          //li
+            .inner
+              .left
+                img.ct_win_defuse(src="/huds/FREEZETIME_HUD/img/round/defused.png")
+              .round 1
+              .right
+          //li
+            .inner
+              .left
+                img.ct_win_time(src="/huds/FREEZETIME_HUD/img/round/time.png")
+              .round 1
+              .right
           - for (let i = 1; i <= 15; i++)
             li
               .inner
