@@ -292,7 +292,9 @@ body {
     filter: invert(100%);
     vertical-align: middle;
 }
-
+#team_info_panel #team_money_panel > .team > li .weapons > img.awp {
+    height: 32%;
+}
 #team_info_panel #team_money_panel > .team > li .weapons > img.armor {
     filter: none;
 }

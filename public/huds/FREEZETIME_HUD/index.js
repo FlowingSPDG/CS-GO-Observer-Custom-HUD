@@ -172,7 +172,7 @@ const updateTeamInfoPanel = (function () {
         const baseImagePath = "/files/img";
         const weaponImages = [];
         if (primaryWeaponName) {
-            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${primaryWeaponName}.png`, "primary"));
+            weaponImages.push(createImageElement(`${baseImagePath}/weapons/${primaryWeaponName}.png`, `primary ${primaryWeaponName}`));
         }
         if (secondaryWeaponName) {
             weaponImages.push(createImageElement(`${baseImagePath}/weapons/${secondaryWeaponName}.png`, "secondary"));
